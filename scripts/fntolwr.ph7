@@ -1,4 +1,4 @@
-#!/data/data/com.termux/files/home/usr/bin/ph7 -r
+#!/home/usr/bin/ph7 -r
 if(count($argv)) {
 	$path=$argv[0];
 	if(substr($path,($l=strlen($path)-1),1)=='/')
@@ -7,7 +7,6 @@ if(count($argv)) {
 	exit(1);
 $path.='/';
 $stack[]=$path;
-	// $stack[]="/sdcard/Download/smallc-master";
 	$c=0;
 	while(count($stack) && $c++<10)
 	{
