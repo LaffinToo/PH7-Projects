@@ -1,0 +1,28 @@
+#!/data/data/os.tools.scriptmanagerpro/files/bin/ph7 -r
+
+function bitstring($val,$maxbits,$format)
+{
+	$bstring=str_repeat(' ',$maxbits+($format?($maxbits/8):0));
+	if($format==3 && $maxbits<16) $format=2;
+	for($i=0;$i<$maxbits;$i++) {
+		$pos=(!$format?$i:
+			($format==1?($i+($i/8)):
+			 ($format==2?(7-($i%8)+(8*intval($i/8))+intval($i/8)):
+			  (15-($i%16)+(16*intval($i/16))+intval((15-($i%16))/8)))));
+		$bstring[$pos]=(($val&(1<<$i))?'1':0);
+	}
+	return $bstring;
+}
+
+$val=9|(10<<4);
+$val=$val|((6|(5<<4))<<8);
+
+
+
+for($i=1;$i<3;$i++) {
+	for($j=0;$j<4;$j++) {
+		echo $val.' = ';
+		echo bitstring($val,$i*8,$j).PHP_EOL;
+	}
+}
+			

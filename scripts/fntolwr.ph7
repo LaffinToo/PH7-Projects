@@ -1,0 +1,25 @@
+#!/data/data/com.termux/files/home/usr/bin/ph7 -r
+if(count($argv)) {
+	$path=$argv[0];
+	if(substr($path,($l=strlen($path)-1),1)=='/')
+		$path=substr($path,0,$l);
+} else
+	exit(1);
+$path.='/';
+$stack[]=$path;
+	// $stack[]="/sdcard/Download/smallc-master";
+	$c=0;
+	while(count($stack) && $c++<10)
+	{
+		$path=array_shift($stack);
+		echo $path.PHP_EOL;
+		$files=glob("$path/*");
+		foreach($files as $f) {
+			echo $f .'->'.($nf=strtolower($f)).(is_dir("$path/$f")?' √':'').PHP_EOL;
+			$f="$path/$f";
+			$nf="$path/$nf";
+			rename($f,$nf.'x');
+			rename($nf.'x',$nf);
+			if(is_dir($nf)) $stack[]=$nf;
+		}
+	}

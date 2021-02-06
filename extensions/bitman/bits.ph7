@@ -1,0 +1,34 @@
+
+function randmax($x)
+{
+	return (mt_rand(1,$x));
+}
+
+	$max=8;
+	
+	$mask=((1<<$max)-1);
+	
+	$val=0;
+	
+	printf("'%s' or  %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),5,bitman(BIT_STRING,$num=bitman(BIT_OR,$val,5),$max));
+	printf("'%s' shl %d = '%s'\n",$string=bitman(BIT_STRING,$num,$max),4,bitman(BIT_STRING,$val=bitman(BIT_SHL,$num,4),$max));
+	printf("'%s' or  %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),6,bitman(BIT_STRING,$num=bitman(BIT_OR,$val,6),$max));
+	$val=$num;
+	
+	printf("'%s' and %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),(1<<4)|2,bitman(BIT_STRING,bitman(BIT_AND,$val,(1<<4)|2),$max));
+	
+	printf("'%s' set %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),3,bitman(BIT_STRING,$num=bitman(BIT_SET,$val,3),$max));
+	printf("'%s' clr %d = '%s'\n",$string=bitman(BIT_STRING,$num,$max),3,bitman(BIT_STRING,$val=bitman(BIT_CLR,$num,3),$max));
+	printf("'%s' get %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),2,bitman(BIT_STRING,bitman(BIT_GET,$val,2),$max));
+	printf("'%s' get %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),3,bitman(BIT_STRING,bitman(BIT_GET,$val,3),$max));
+	printf("'%s' flp %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),2,bitman(BIT_STRING,$num=bitman(BIT_FLP,$val,2),$max));
+	printf("'%s' flp %d = '%s'\n",$string=bitman(BIT_STRING,$num,$max),3,bitman(BIT_STRING,$val=bitman(BIT_FLP,$num,3),$max));
+	
+	$val=((5<<4)|6)&$mask;
+	
+	$r=3;
+	
+	printf("'%s' shl %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),$r,bitman(BIT_STRING,bitman(BIT_SHL,$val,$r)&$mask,$max));
+	printf("'%s' shr %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),$r,bitman(BIT_STRING,bitman(BIT_SHR,$val,$r)&$mask,$max));
+	printf("'%s' rol %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),$r,bitman(BIT_STRING,bitman(BIT_ROL,$val,$r,$max),$max));
+	printf("'%s' ror %d = '%s'\n",$string=bitman(BIT_STRING,$val,$max),$r,bitman(BIT_STRING,bitman(BIT_ROR,$val,$r,$max),$max));

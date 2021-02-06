@@ -1,0 +1,38 @@
+#!/home/usr/bin/ph7 -r
+if(count($argv)) {
+	$path=$argv[0];
+	if(substr($path,($l=strlen($path)-1),1)=='/')
+		$path=substr($path,0,$l);
+} else {
+  echo "linkdir.ph7 <directory>\n";
+  echo "recreates directory structure, files are symlinked.";
+	exit(1);
+}
+
+$dir=substr($path,strlen($path)-strpos(strrev($path),"/"));
+
+$path.='/';
+$stack[]=$path;
+$cwds[]=getcwd().'/'.$dir.'/';
+if(!is_dir($dir))
+  mkdir($dir);
+while(count($stack)) {
+	$path=array_shift($stack);
+	$cwd=array_shift($cwds);
+	$files=glob("$path\*");
+	echo $path.PHP_EOL;
+	foreach($files as $file)
+	{
+		if(is_dir($path.$file)) {
+			$stack[]=$path.$file.'/';
+			$cwds[]=$cwd.$file.'/';
+			if(!is_dir($cwd.$file))
+			  mkdir($cwd.$file);
+		} else {
+			if(file_exists($cwd.$file))
+				unlink($cwd.$file);
+			symlink($path.$file,$cwd.$file);
+			echo $cwd.$file. PHP_EOL;
+		}
+	}
+}
